@@ -23,7 +23,7 @@
 ## 📋 Table of Contents
 
 - [Overview](#-overview)
-- [What's New](#-whats-new-v200)
+- [What's New](#-whats-new-v300)
 - [Features](#-features)
 - [Architecture](#-architecture)
 - [Quick Start](#-quick-start)
@@ -45,8 +45,13 @@
 
 DRUGIFY is a comprehensive pharmacogenomic clinical decision support system that analyzes patient genetic data (VCF files) to provide evidence-based drug recommendations. Built on CPIC (Clinical Pharmacogenetics Implementation Consortium) guidelines, it helps healthcare providers make informed prescribing decisions based on individual patient genetics.
 
+**Version 3.0** introduces a complete multi-page web application with user authentication, dashboard, and enhanced user experience.
+
 ### Key Capabilities
 
+- **Multi-Page Web Application**: Professional website with home, about, analyzer, dashboard, and profile pages
+- **User Authentication**: Secure login/signup with Google OAuth and email/password via Supabase
+- **User Dashboard**: Track analysis history and view statistics (protected route)
 - **Drug-Specific Analysis**: Select specific drugs for targeted pharmacogenomic analysis
 - **VCF File Analysis**: Process genomic variant data in VCF v4.2 format
 - **CPIC-Based Recommendations**: Evidence-based drug-gene interaction analysis
@@ -58,9 +63,47 @@ DRUGIFY is a comprehensive pharmacogenomic clinical decision support system that
 
 ---
 
-## 🆕 What's New (v2.0.0)
+## 🆕 What's New (v3.0.0)
 
-### Major Features
+### Multi-Page Web Application 🌐
+
+**Complete Website Redesign**
+- Professional landing page with hero section, features, and statistics
+- Dedicated About page with mission, values, and team information
+- Separate Detection Analyzer page (formerly the main page)
+- Responsive header with navigation and mobile menu
+- Comprehensive footer with links and social media
+
+### User Authentication & Accounts 🔐
+
+**Secure Authentication System**
+- Google OAuth integration via Supabase
+- Email/Password signup and login
+- Protected routes for authenticated users
+- User session management with auto-refresh
+- Secure logout functionality
+
+### User Dashboard 📊
+
+**Personal Analysis Hub**
+- View analysis statistics and history
+- Track total analyses and monthly activity
+- Quick access to start new analysis
+- Analysis history with detailed records (coming soon)
+- User profile management
+
+### Enhanced User Experience ✨
+
+**Improved Navigation & Layout**
+- Multi-page routing with React Router
+- Layout wrapper with consistent header/footer
+- User dropdown menu with profile access
+- Mobile-responsive design throughout
+- Smooth page transitions with Framer Motion
+
+### Previous Features (v2.0.0)
+
+### Drug Selection Interface 💊
 
 ✨ **Drug Selection Interface**
 - Searchable dropdown with autocomplete
@@ -262,6 +305,7 @@ DRUGIFY is a comprehensive pharmacogenomic clinical decision support system that
 - Node.js 24.11.0 or higher
 - npm or yarn package manager
 - Git
+- Supabase account (free tier available at [supabase.com](https://supabase.com))
 
 ### Installation
 
@@ -281,10 +325,23 @@ cd ..
 
 ### Configuration
 
+#### 1. Supabase Setup
+
+1. Create a Supabase project at [supabase.com](https://supabase.com)
+2. Get your project URL and anon key from Settings > API
+3. (Optional) Enable Google OAuth in Authentication > Providers
+
+#### 2. Environment Files
+
 ```bash
 # Create environment files from templates
 cp .env.example .env
 cp backend/.env.example backend/.env
+
+# Edit .env and add your Supabase credentials:
+# VITE_SUPABASE_URL=https://your-project.supabase.co
+# VITE_SUPABASE_PUBLISHABLE_KEY=your-anon-key
+# VITE_API_URL=http://localhost:8000
 
 # Generate a secret key for backend
 openssl rand -hex 32
@@ -292,6 +349,8 @@ openssl rand -hex 32
 # Edit backend/.env and add:
 # SECRET_KEY=<your-generated-key>
 ```
+
+For detailed setup instructions, see [SETUP_GUIDE.md](SETUP_GUIDE.md)
 
 ### Running the Application
 
@@ -304,6 +363,15 @@ python -m uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 cd ..
 npm run dev
 ```
+
+### First Steps
+
+1. Open http://localhost:8081 in your browser
+2. Click "Sign up" to create an account
+3. Log in with Google OAuth or email/password
+4. Navigate to "Detection Analyzer" from the header
+5. Upload a VCF file and select drugs to analyze
+6. View your analysis history in the Dashboard
 
 Access the application:
 - **Frontend**: http://localhost:8081
