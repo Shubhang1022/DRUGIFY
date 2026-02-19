@@ -297,6 +297,23 @@ DRUGIFY is a comprehensive pharmacogenomic clinical decision support system that
 
 ---
 
+## 📁 Project Structure
+
+```
+pharmaguard-clinical-insights-main/
+├── frontend/              # React + Vite frontend
+│   ├── src/              # Source code
+│   ├── public/           # Static assets
+│   └── package.json      # Frontend dependencies
+├── backend/              # FastAPI backend
+│   ├── app/             # Application code
+│   └── requirements.txt # Python dependencies
+├── docs/                # Documentation
+└── README.md           # This file
+```
+
+---
+
 ## 🚀 Quick Start
 
 ### Prerequisites
@@ -315,9 +332,11 @@ git clone https://github.com/yourusername/drugify.git
 cd pharmaguard-clinical-insights-main
 
 # Install frontend dependencies
+cd frontend
 npm install
 
 # Install backend dependencies
+cd ../backend
 cd backend
 pip install -r requirements.txt
 cd ..
@@ -360,13 +379,13 @@ cd backend
 python -m uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 
 # Terminal 2: Start Frontend
-cd ..
+cd frontend
 npm run dev
 ```
 
 ### First Steps
 
-1. Open http://localhost:8081 in your browser
+1. Open http://localhost:8080 in your browser
 2. Click "Sign up" to create an account
 3. Log in with Google OAuth or email/password
 4. Navigate to "Detection Analyzer" from the header

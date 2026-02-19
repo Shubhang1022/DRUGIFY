@@ -99,3 +99,18 @@ pnpm-lock.yaml
 # Supabase (local development)
 supabase/.branches
 supabase/.temp
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.local
+
+# Backend
+backend/__pycache__/
+backend/*.db
+backend/.env
+backend/venv/
+
+# Docs
+docs/.DS_Store

@@ -108,14 +108,13 @@ export default function AiInsightsPanel({ report }: AiInsightsPanelProps) {
     setError(null);
     setInsights("");
 
-    const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/analyze-pgx`;
+    const API_URL = `${import.meta.env.VITE_API_URL}/api/v1/ai-insights`;
 
     try {
-      const resp = await fetch(CHAT_URL, {
+      const resp = await fetch(API_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
         },
         body: JSON.stringify({
           variants: report.variants || [],

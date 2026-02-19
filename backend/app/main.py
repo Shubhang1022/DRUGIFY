@@ -146,6 +146,10 @@ app.include_router(analysis.router, prefix="/api/v1", tags=["analysis"])
 from .routers import drugs
 app.include_router(drugs.router, prefix="/api/v1", tags=["drugs"])
 
+# Import and register AI insights router
+from .routers import ai_insights
+app.include_router(ai_insights.router, prefix="/api/v1", tags=["ai-insights"])
+
 
 @app.get("/health")
 async def health():
