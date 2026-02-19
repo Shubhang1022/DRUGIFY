@@ -1,0 +1,4 @@
+project_id = "ewhntptpsfqwuetrgyxy"
+
+[functions.analyze-pgx]
+verify_jwt = false
