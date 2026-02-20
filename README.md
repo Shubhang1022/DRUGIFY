@@ -14,7 +14,7 @@
 
 *Empowering healthcare providers with AI-powered pharmacogenomic analysis for personalized medicine*
 
-[Features](#-features) • [Quick Start](#-quick-start) • [Documentation](#-documentation) • [Security](#-security) • [API](#-api-documentation)
+[🌐 Live Demo](https://drugify.netlify.app) • [📹 Video Demo](https://www.linkedin.com/feed/update/urn:li:activity:7430438129402068992/) • [Features](#-features) • [Quick Start](#-quick-start) • [Documentation](#-documentation)
 
 </div>
 
@@ -955,6 +955,16 @@ We welcome contributions! Please follow these steps:
 - Write tests for new features
 - Update documentation as needed
 - Ensure all tests pass before submitting PR
+
+---
+
+## 👥 Team
+
+This project was developed by:
+
+- **Shubhang Mishra** - Team Lead & Full Stack Developer
+- **Dev Tiwari** - Backend Developer & API Design
+- **Vishal Verma** - Frontend Developer & UI/UX Design
 
 ---
 
