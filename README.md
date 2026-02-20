@@ -962,9 +962,9 @@ We welcome contributions! Please follow these steps:
 
 This project was developed by:
 
-- **Shubhang Mishra** - Team Lead & Full Stack Developer
-- **Dev Tiwari** - Backend Developer & API Design
-- **Vishal Verma** - Frontend Developer & UI/UX Design
+- **Shubhang Mishra** -  Full Stack Developer
+- **Dev Tiwari** - Team Lead & API Design
+- **Vishal Verma** - Frontend Developer & Backend Developer
 
 ---
 
