@@ -14,6 +14,8 @@ Your backend is live and healthy:
 - ✅ Drugs API: https://drugify-qxee.onrender.com/api/v1/drugs
 - ✅ API Docs: https://drugify-qxee.onrender.com/docs
 
+**Build Fix Applied**: ✅ Fixed import issue for Vercel compatibility (added .ts extension)
+
 ---
 
 ## 🎯 Deploy Frontend (5 minutes)
