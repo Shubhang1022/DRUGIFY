@@ -17,7 +17,7 @@ export default defineConfig(({ mode }) => ({
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
-    extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.vue'],
+    extensions: ['.ts', '.tsx', '.js', '.jsx', '.mjs', '.json'],
   },
   build: {
     rollupOptions: {
@@ -25,5 +25,13 @@ export default defineConfig(({ mode }) => ({
         manualChunks: undefined,
       },
     },
+    commonjsOptions: {
+      include: [/node_modules/],
+      extensions: ['.js', '.cjs', '.ts', '.tsx'],
+    },
+  },
+  optimizeDeps: {
+    include: ['react', 'react-dom'],
+    extensions: ['.ts', '.tsx', '.js', '.jsx'],
   },
 }));
