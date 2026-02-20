@@ -806,33 +806,100 @@ locust -f tests/load_test.py --host=http://localhost:8000
 
 ## 🚢 Deployment
 
-### Production Checklist
+DRUGIFY is designed for easy deployment with separate frontend and backend services.
 
-Before deploying to production:
+### 🎯 Quick Deploy (15 minutes)
 
-- [ ] Rotate all API keys and secrets
-- [ ] Set `ENVIRONMENT=production` and `DEBUG=False`
-- [ ] Migrate to PostgreSQL database
-- [ ] Set up SSL/HTTPS certificates
-- [ ] Configure Redis for rate limiting
-- [ ] Set up monitoring (Sentry, DataDog, etc.)
-- [ ] Configure automated backups
-- [ ] Review HIPAA/GDPR compliance
-- [ ] Run security audit
-- [ ] Perform load testing
+**Recommended Stack:**
+- **Frontend**: Vercel (Free tier available)
+- **Backend**: Railway (Free $5 credit) or Render (Free tier)
 
-### Deployment Options
-
-#### Docker Deployment
-
+**Quick Start:**
 ```bash
-# Build and run with Docker Compose
-docker-compose up -d
+# 1. Push code to GitHub
+git push origin main
+
+# 2. Deploy Backend to Railway
+# - Go to railway.app → New Project → Deploy from GitHub
+# - Root: backend | Start: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+# - Add environment variables (see QUICK_DEPLOY.md)
+
+# 3. Deploy Frontend to Vercel
+# - Go to vercel.com → New Project → Import from GitHub
+# - Root: frontend | Framework: Vite
+# - Add environment variables with Railway backend URL
+
+# 4. Update CORS in Railway with Vercel URL
 ```
 
-#### Manual Deployment
+**See**: [QUICK_DEPLOY.md](QUICK_DEPLOY.md) for step-by-step instructions
 
-See [Production Deployment Guide](PRODUCTION_DEPLOYMENT.md) for detailed instructions.
+### 📖 Deployment Guides
+
+Choose your deployment guide:
+
+1. **[QUICK_DEPLOY.md](QUICK_DEPLOY.md)** - ⚡ 15-minute quick start
+2. **[DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md)** - 📚 Complete guide with all options
+3. **[DEPLOYMENT_CHECKLIST.md](DEPLOYMENT_CHECKLIST.md)** - ✅ Step-by-step checklist
+
+### 🏗️ Deployment Architecture
+
+```
+Frontend (Vercel)  →  Backend (Railway/Render)  →  Database (SQLite/PostgreSQL)
+     ↓                        ↓
+Supabase Auth          AI Insights API
+```
+
+### 🔧 Deployment Options
+
+| Option | Frontend | Backend | Difficulty | Cost |
+|--------|----------|---------|------------|------|
+| **Recommended** | Vercel | Railway | Easy | Free-$5/mo |
+| Alternative 1 | Vercel | Render | Easy | Free-$7/mo |
+| Alternative 2 | Render | Render | Medium | Free-$14/mo |
+| Docker | Self-hosted | Self-hosted | Advanced | Variable |
+
+### ⚙️ Environment Variables
+
+**Backend (Railway/Render):**
+```env
+ENVIRONMENT=production
+DEBUG=False
+SECRET_KEY=<generate-32-char-key>
+CORS_ORIGINS=https://your-app.vercel.app
+DATABASE_URL=sqlite:///./pharmaguard.db
+```
+
+**Frontend (Vercel):**
+```env
+VITE_API_URL=https://your-backend.railway.app
+VITE_SUPABASE_URL=https://ewhntptpsfqwuetrgyxy.supabase.co
+VITE_SUPABASE_PROJECT_ID=ewhntptpsfqwuetrgyxy
+VITE_SUPABASE_PUBLISHABLE_KEY=<your-key>
+```
+
+### ✅ Production Checklist
+
+Before going live:
+- [ ] Backend deployed and health check passing
+- [ ] Frontend deployed and accessible
+- [ ] CORS configured correctly
+- [ ] Environment variables set
+- [ ] Supabase authentication working
+- [ ] Database persisting data
+- [ ] All features tested end-to-end
+- [ ] Monitoring enabled
+- [ ] Backup strategy in place
+
+**Full checklist**: [DEPLOYMENT_CHECKLIST.md](DEPLOYMENT_CHECKLIST.md)
+
+### 🐛 Common Issues
+
+**CORS Error**: Update `CORS_ORIGINS` in backend with frontend URL
+**API Not Found**: Check `VITE_API_URL` has no trailing slash
+**Build Failed**: Verify root directory settings (backend/frontend)
+
+**See**: [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) troubleshooting section
 
 ---
 
@@ -852,7 +919,10 @@ See [Production Deployment Guide](PRODUCTION_DEPLOYMENT.md) for detailed instruc
 - [All Errors Fixed](ALL_ERRORS_FIXED.md) - Error resolution guide
 
 ### Deployment
-- [Production Deployment](PRODUCTION_DEPLOYMENT.md) - Complete deployment guide
+- **[QUICK_DEPLOY.md](QUICK_DEPLOY.md)** - ⚡ 15-minute deployment guide
+- **[DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md)** - 📚 Complete deployment documentation
+- **[DEPLOYMENT_CHECKLIST.md](DEPLOYMENT_CHECKLIST.md)** - ✅ Step-by-step checklist
+- [Production Deployment](PRODUCTION_DEPLOYMENT.md) - Legacy deployment guide
 - [Production Readiness Checklist](PRODUCTION_READY_CHECKLIST.md) - Pre-launch checklist
 - [Production Ready Summary](PRODUCTION_READY_SUMMARY.md) - Deployment summary
 
