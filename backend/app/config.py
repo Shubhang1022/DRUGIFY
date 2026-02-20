@@ -19,20 +19,31 @@ class Settings(BaseSettings):
     access_token_expire_minutes: int = 30
     
     # CORS
-    cors_origins: List[str] = [
-        "http://localhost:5173",
-        "http://localhost:8080",
-        "http://localhost:8081",
-        "http://localhost:3000",
-        "http://127.0.0.1:8080",
-        "http://127.0.0.1:8081",
-        "http://127.0.0.1:5173",
-        "http://127.0.0.1:3000",
-        "http://[::1]:8080",
-        "http://[::1]:8081",
-        "http://[::1]:5173",
-        "http://[::1]:3000",
-    ]
+    cors_origins: List[str] = []
+    
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        # Parse CORS_ORIGINS from environment variable
+        cors_env = os.getenv("CORS_ORIGINS", "")
+        if cors_env:
+            # Split by comma and strip whitespace
+            self.cors_origins = [origin.strip() for origin in cors_env.split(",") if origin.strip()]
+        else:
+            # Default CORS origins for development
+            self.cors_origins = [
+                "http://localhost:5173",
+                "http://localhost:8080",
+                "http://localhost:8081",
+                "http://localhost:3000",
+                "http://127.0.0.1:8080",
+                "http://127.0.0.1:8081",
+                "http://127.0.0.1:5173",
+                "http://127.0.0.1:3000",
+                "http://[::1]:8080",
+                "http://[::1]:8081",
+                "http://[::1]:5173",
+                "http://[::1]:3000",
+            ]
     
     # Rate Limiting
     rate_limit_requests: int = 10
