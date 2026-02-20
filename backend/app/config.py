@@ -1,5 +1,6 @@
-from pydantic_settings import BaseSettings
-from typing import List
+from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic import field_validator
+from typing import List, Union
 import os
 import secrets
 
@@ -7,43 +8,19 @@ import secrets
 class Settings(BaseSettings):
     # Application
     app_name: str = "PharmaGuard Clinical Insights"
-    environment: str = os.getenv("ENVIRONMENT", "development")
-    debug: bool = os.getenv("DEBUG", "False").lower() == "true"
+    environment: str = "development"
+    debug: bool = False
     
     # Database
-    database_url: str = os.getenv("DATABASE_URL", "sqlite+aiosqlite:///./pharmaguard.db")
+    database_url: str = "sqlite+aiosqlite:///./pharmaguard.db"
     
     # Security
-    secret_key: str = os.getenv("SECRET_KEY", secrets.token_urlsafe(32))
+    secret_key: str = secrets.token_urlsafe(32)
     jwt_algorithm: str = "HS256"
     access_token_expire_minutes: int = 30
     
-    # CORS
-    cors_origins: List[str] = []
-    
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        # Parse CORS_ORIGINS from environment variable
-        cors_env = os.getenv("CORS_ORIGINS", "")
-        if cors_env:
-            # Split by comma and strip whitespace
-            self.cors_origins = [origin.strip() for origin in cors_env.split(",") if origin.strip()]
-        else:
-            # Default CORS origins for development
-            self.cors_origins = [
-                "http://localhost:5173",
-                "http://localhost:8080",
-                "http://localhost:8081",
-                "http://localhost:3000",
-                "http://127.0.0.1:8080",
-                "http://127.0.0.1:8081",
-                "http://127.0.0.1:5173",
-                "http://127.0.0.1:3000",
-                "http://[::1]:8080",
-                "http://[::1]:8081",
-                "http://[::1]:5173",
-                "http://[::1]:3000",
-            ]
+    # CORS - can be a string (comma-separated) or list
+    cors_origins: Union[str, List[str]] = "http://localhost:8080,http://localhost:5173"
     
     # Rate Limiting
     rate_limit_requests: int = 10
@@ -54,11 +31,30 @@ class Settings(BaseSettings):
     allowed_file_types: List[str] = [".vcf"]
     
     # Logging
-    log_level: str = os.getenv("LOG_LEVEL", "INFO")
+    log_level: str = "INFO"
 
-    class Config:
-        env_file = ".env"
-        case_sensitive = False
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        case_sensitive=False,
+        extra="ignore"
+    )
+
+    @field_validator('cors_origins', mode='before')
+    @classmethod
+    def parse_cors_origins(cls, v):
+        """Parse CORS origins from string or list"""
+        if isinstance(v, str):
+            # Split by comma and strip whitespace
+            return [origin.strip() for origin in v.split(',') if origin.strip()]
+        return v
+    
+    @field_validator('debug', mode='before')
+    @classmethod
+    def parse_debug(cls, v):
+        """Parse debug boolean from string"""
+        if isinstance(v, str):
+            return v.lower() in ('true', '1', 'yes')
+        return v
 
 
 settings = Settings()
